@@ -14,12 +14,13 @@ const transporter = nodemailer.createTransport({
 const fromAddress = process.env.MAIL_USERNAME;
 const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
 const backendPort = process.env.PORT || "8080";
+const backendUrl = process.env.BACKEND_URL || `http://localhost:${backendPort}`;
 
 async function sendVerificationEmail(toEmail, name, token) {
   // Link to backend API which will verify and redirect to frontend.
   // NOTE: kept exactly as in the Java version -- this always points at
   // localhost regardless of where the backend is actually deployed.
-  const link = `http://localhost:${backendPort}/api/auth/verify?token=${token}`;
+  const link = `${backendUrl}/api/auth/verify?token=${token}`;
 
   await transporter.sendMail({
     from: fromAddress,
